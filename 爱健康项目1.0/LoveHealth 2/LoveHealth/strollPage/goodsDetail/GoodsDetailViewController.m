@@ -9,26 +9,12 @@
 #import "GoodsDetailViewController.h"
 #import "Header.h"
 #import "GoodsDetailTableViewCell.h"
+#import <RongIMKit/RongIMKit.h>
+#import "MyOrderViewController.h"
 
 @interface GoodsDetailViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
-@property (strong,nonatomic)UIView *headView;  //放在tabelheaderView上
-@property (strong,nonatomic)UIScrollView *headScroll;
-@property (strong,nonatomic)UIImageView *headImage;
-@property (strong,nonatomic)UILabel *goodsNameLabel;  //商品名label
-@property (strong,nonatomic)UILabel *collectLabel;  //收藏label
-@property (strong,nonatomic)UIButton *collectbtn;  //收藏image
-@property (strong,nonatomic)UILabel *verticalLineLabel;  //垂直线label
-@property (strong,nonatomic)UILabel *transervseLineLabel;  //横线label
-@property (strong,nonatomic)UILabel *goodsPriceLabel;  //商品价格label
-@property (strong,nonatomic)UILabel *goodsOldPriceLabel;  //商品原价label
-@property (strong,nonatomic)UILabel *expressFeeLabel;  //快递费label
-@property (strong,nonatomic)UILabel *saleLabel; //月销量label
-@property (strong,nonatomic)UILabel *shopAddressLabel; //商家地址
-@property (strong,nonatomic)UILabel *sizeSelectLabel;  //尺寸选择
-@property (strong,nonatomic)UILabel *sellerPromiseLabel; //卖家承诺
-@property (strong,nonatomic)UILabel *separateLineLabel; //灰色分割线
-@property (strong,nonatomic)UILabel * evaluateLabel;  //评价
+
 
 @property (strong,nonatomic)UIView *bottomView;
 @property (strong,nonatomic)UIButton *serviceBtn; //客服按钮
@@ -37,13 +23,21 @@
 @property (strong,nonatomic)UIButton *buyBtn;  //立即购买按钮
 @property (strong,nonatomic)UILabel *label;  //底部分隔线
 @property (strong,nonatomic)UILabel *assess1, *assess2, *assess3, *assess4, *assess5, *assess6;  //评价类
+@property (strong,nonatomic)NSMutableArray *allArr;  //累计评论数
+@property (strong,nonatomic)NSMutableArray *typeArr1, *typeArr2, *typeArr3, *typeArr4, *typeArr5, *typeArr6;
 @property (assign, nonatomic)float height;  //评论label高度
 
 @property (strong,nonatomic)UIView *backGroundView; //背景灰色（透明度）
 @property (strong,nonatomic)UIView *cartView;  //购物车
 @property (strong,nonatomic)UIView *buyView;  //购买
 @property (assign,nonatomic)int numberHave;  //商品库存数量
-@property (assign,nonatomic)int number;  //添加商品数量
+@property (assign,nonatomic)int number;  //添加商品数量（添加到购物车）
+@property (assign,nonatomic)int number1;  //添加商品数量（直接购买）
+@property (strong,nonatomic)UILabel *cartNum;  //购物车添加数量
+@property (strong,nonatomic)UILabel *buyNum;  //直接支付数量
+
+@property (strong,nonatomic)GoodsDetailViewController *goodsDv;
+
 @end
 
 @implementation GoodsDetailViewController
@@ -65,6 +59,7 @@
      [self.goodsDetail.tableHeaderView addSubview:self.headView];
      
      self.picArr = [NSMutableArray arrayWithCapacity:0];
+     self.goodsDic = [NSMutableDictionary dictionaryWithCapacity:0];
      
      [self createHeadScroll];
      [self createOtherPart];
@@ -150,7 +145,7 @@
      
      self.goodsNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(210), WIDTH5S(140), HEIGHT5S(30))];
      self.goodsNameLabel.textAlignment = NSTextAlignmentLeft;
-     self.goodsNameLabel.text = @"商品名称";
+     self.goodsNameLabel.text = [self.goodsDic objectForKey:@"name"];
      [self.headView addSubview:self.goodsNameLabel];
      
      self.collectLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-40, HEIGHT5S(236), WIDTH5S(30), HEIGHT5S(18))];
@@ -212,7 +207,7 @@
      self.sizeSelectLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, HEIGHT5S(340), SCREEN_WIDTH, HEIGHT5S(40))];
      self.sizeSelectLabel.textColor = COLOR(188, 188, 188, 1);
      self.sizeSelectLabel.font = FONT(12);
-     self.sizeSelectLabel.text = @"    点击选择商品尺寸、颜色";
+     self.sizeSelectLabel.text = @"    点击选择商品款型、颜色";
      self.sizeSelectLabel.textAlignment = NSTextAlignmentLeft;
      [self.headView addSubview:self.sizeSelectLabel];
      
@@ -317,11 +312,11 @@
      
      if (self.picArr.count == 0) {
           pic = @"nilPic";
-//          GoodsDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:pic];
+          
           if (cell == nil) {
                cell = [[GoodsDetailTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:pic];
           }
-          cell.userImage.image = [UIImage imageNamed:@""];
+          cell.userImage.image = [UIImage imageNamed:@"1.0.jpg"];
           cell.userName.text = @"xxx";
           cell.dateLabel.text = @"2016-04-05";
           cell.commentLabel.text = @"不错";
@@ -334,7 +329,7 @@
      if (self.picArr.count > 0){
           
           pic = @"havePic";
-//          GoodsDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:pic];
+          
           if (cell == nil) {
                cell = [[GoodsDetailTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:pic];
           }
@@ -403,11 +398,12 @@
      [addBtn setTitle:@"+" forState:UIControlStateNormal];
      [self.cartView addSubview:addBtn];
      
-     UILabel *buyNum = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH5S(245), HEIGHT5S(220), WIDTH5S(60), HEIGHT5S(20))];
+     self.cartNum = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH5S(245), HEIGHT5S(220), WIDTH5S(60), HEIGHT5S(20))];
+     self.cartNum.textAlignment = 1;
      self.number = 0;
-     buyNum.text = [NSString stringWithFormat:@"%d",self.number];
-     buyNum.font = FONT(12);
-     [self.cartView addSubview:buyNum];
+     self.cartNum.text = [NSString stringWithFormat:@"%d",self.number];
+     self.cartNum.font = FONT(12);
+     [self.cartView addSubview:self.cartNum];
      
      UIButton *goCart = [[UIButton alloc]initWithFrame:CGRectMake(0, HEIGHT5S(250), SCREEN_WIDTH, HEIGHT5S(50))];
      [goCart setBackgroundColor:COLOR(0, 210, 210, 1)];
@@ -468,11 +464,12 @@
      [addBtn setTitle:@"+" forState:UIControlStateNormal];
      [self.buyView addSubview:addBtn];
      
-     UILabel *buyNum = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH5S(245), HEIGHT5S(220), WIDTH5S(60), HEIGHT5S(20))];
-     self.number = 0;
-     buyNum.text = [NSString stringWithFormat:@"%d",self.number];
-     buyNum.font = FONT(12);
-     [self.buyView addSubview:buyNum];
+     self.buyNum = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH5S(245), HEIGHT5S(220), WIDTH5S(60), HEIGHT5S(20))];
+     self.buyNum.textAlignment = 1;
+     self.number1 = 0;
+     self.buyNum.text = [NSString stringWithFormat:@"%d",self.number1];
+     self.buyNum.font = FONT(12);
+     [self.buyView addSubview:self.buyNum];
      
      UIButton *goCart = [[UIButton alloc]initWithFrame:CGRectMake(0, HEIGHT5S(250), SCREEN_WIDTH, HEIGHT5S(50))];
      [goCart setBackgroundColor:COLOR(0, 210, 210, 1)];
@@ -485,21 +482,52 @@
      [self.buyView addSubview:back];
      
      //点击事件
-     [reduceBtn addTarget:self action:@selector(reduce) forControlEvents:UIControlEventTouchUpInside];
-     [addBtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
+     [reduceBtn addTarget:self action:@selector(reduce1) forControlEvents:UIControlEventTouchUpInside];
+     [addBtn addTarget:self action:@selector(add1) forControlEvents:UIControlEventTouchUpInside];
      [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-     [goCart addTarget:self action:@selector(goCart) forControlEvents:UIControlEventTouchUpInside];
+     [goCart addTarget:self action:@selector(goCart1) forControlEvents:UIControlEventTouchUpInside];
+}
+
+//选择颜色、款型
+- (void)createClass{
+     
+     
 }
 
 - (void)reduce{
-     self.number--;
-     NSLog(@"--");
+     if (self.number > 0) {
+          self.number--;
+          self.cartNum.text = [NSString stringWithFormat:@"%d",self.number];
+     }else{
+          
+     }
+     
 }
 - (void)add{
      
      self.number++;
+     self.cartNum.text = [NSString stringWithFormat:@"%d",self.number];
      NSLog(@"++");
 }
+- (void)reduce1{
+     if (self.number1 > 0) {
+          self.number1--;
+          self.buyNum.text = [NSString stringWithFormat:@"%d",self.number1];
+     }else{
+          
+     }
+     
+}
+
+- (void)add1{
+     
+     self.number1++;
+     self.buyNum.text = [NSString stringWithFormat:@"%d",self.number1];
+     [self.goodsDic setObject:self.buyNum.text forKey:@"buyNumber"];
+     NSLog(@"++");
+}
+
+//返回商品详情
 - (void)back{
      
      [UIView animateWithDuration:0.5 animations:^{
@@ -508,7 +536,18 @@
           self.backGroundView.alpha = 0;
      }];
 }
+//家入购物车
 - (void)goCart{
+     
+}
+
+//去支付
+- (void)goCart1{
+     
+     MyOrderViewController *mvc = [[MyOrderViewController alloc]init];
+     mvc.orderDic = self.goodsDic;
+     [self.navigationController pushViewController:mvc animated:YES];
+     self.buyView.frame = CGRectMake(0, HEIGHT5S(568), SCREEN_WIDTH, HEIGHT5S(300));
      
 }
 #pragma mark - 底部四个按钮执行方法
@@ -517,9 +556,20 @@
      
      if (sender.tag == 1) {
           
+          RCConversationViewController *chat = [[RCConversationViewController alloc]init];
+          //设置会话的类型，如单聊、讨论组、群聊、聊天室、客服、公众服务会话等
+          chat.conversationType = ConversationType_PRIVATE;
+          //设置会话的目标会话ID。（单聊、客服、公众服务会话为对方的ID，讨论组、群聊、聊天室为会话的ID）
+          chat.targetId = @"123456789";
+          //设置聊天会话界面要显示的标题
+          chat.title = @"与xxx聊天";
+          //显示聊天会话界面
+          [self.navigationController pushViewController:chat animated:YES];
+          
      }else if (sender.tag == 2){
           
      }else if (sender.tag == 3){
+          self.number = 0;
           
           [UIView animateWithDuration:0.5 animations:^{
                self.cartView.frame = CGRectMake(0, HEIGHT5S(268), SCREEN_WIDTH, HEIGHT5S(300));
@@ -527,6 +577,7 @@
           }];
           
      }else{
+          self.number1 = 0;
           
           [UIView animateWithDuration:0.5 animations:^{
                self.buyView.frame = CGRectMake(0, HEIGHT5S(268), SCREEN_WIDTH, HEIGHT5S(300));

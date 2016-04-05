@@ -82,6 +82,7 @@
 		C3A9AF6C1CAA91360011CACA /* backBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = C3A9AF6B1CAA91360011CACA /* backBlue.png */; };
 		C3A9AF6E1CAA91B90011CACA /* like_48px_1159878_easyicon.net.png in Resources */ = {isa = PBXBuildFile; fileRef = C3A9AF6D1CAA91B90011CACA /* like_48px_1159878_easyicon.net.png */; };
 		C3C281651CAE172000210648 /* GoodsDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C281641CAE172000210648 /* GoodsDetailTableViewCell.m */; };
+		C3C281681CB3D19F00210648 /* OrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C281671CB3D19F00210648 /* OrderTableViewCell.m */; };
 		C3ECF7371CAD30140033C3F9 /* nearlistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3ECF7361CAD30140033C3F9 /* nearlistViewController.m */; };
 		C3ECF77C1CAD57FF0033C3F9 /* GoodsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3ECF77B1CAD57FF0033C3F9 /* GoodsDetailViewController.m */; };
 		C3ECF77F1CAD58270033C3F9 /* GoodsSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3ECF77E1CAD58270033C3F9 /* GoodsSearchViewController.m */; };
@@ -238,6 +239,8 @@
 		C3A9AF6D1CAA91B90011CACA /* like_48px_1159878_easyicon.net.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like_48px_1159878_easyicon.net.png; sourceTree = "<group>"; };
 		C3C281631CAE172000210648 /* GoodsDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsDetailTableViewCell.h; sourceTree = "<group>"; };
 		C3C281641CAE172000210648 /* GoodsDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsDetailTableViewCell.m; sourceTree = "<group>"; };
+		C3C281661CB3D19F00210648 /* OrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTableViewCell.h; sourceTree = "<group>"; };
+		C3C281671CB3D19F00210648 /* OrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTableViewCell.m; sourceTree = "<group>"; };
 		C3ECF7351CAD30140033C3F9 /* nearlistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nearlistViewController.h; sourceTree = "<group>"; };
 		C3ECF7361CAD30140033C3F9 /* nearlistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = nearlistViewController.m; sourceTree = "<group>"; };
 		C3ECF77A1CAD57FF0033C3F9 /* GoodsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsDetailViewController.h; sourceTree = "<group>"; };
@@ -723,6 +726,8 @@
 			children = (
 				C329B2CB1CA6B94E00F8C87B /* MyOrderViewController.h */,
 				C329B2CC1CA6B94E00F8C87B /* MyOrderViewController.m */,
+				C3C281661CB3D19F00210648 /* OrderTableViewCell.h */,
+				C3C281671CB3D19F00210648 /* OrderTableViewCell.m */,
 			);
 			path = myOrder;
 			sourceTree = "<group>";
@@ -1054,6 +1059,7 @@
 				C329B2751CA69E9400F8C87B /* OnlineServerceViewController.m in Sources */,
 				C329B2811CA69FA100F8C87B /* PostDetailViewController.m in Sources */,
 				C3A9AF501CAA234C0011CACA /* AFURLSessionManager.m in Sources */,
+				C3C281681CB3D19F00210648 /* OrderTableViewCell.m in Sources */,
 				C329B2AE1CA6A5BF00F8C87B /* RegisterViewController.m in Sources */,
 				C3ECF78F1CAD586B0033C3F9 /* QualityGoodsCollectionViewCell.m in Sources */,
 				C329B28E1CA6A17100F8C87B /* MyPageListViewController.m in Sources */,
