@@ -45,31 +45,12 @@
                self.dateLabel.textAlignment = 0;
                [self.contentView addSubview:self.dateLabel];
                
-               self.sizeLabel = [[UILabel alloc]init];
-               self.sizeLabel.font = FONT(12);
-               self.sizeLabel.textAlignment = 0;
-               [self.contentView addSubview:self.sizeLabel];
-               
-               self.colorLabel = [[UILabel alloc]init];
-               self.colorLabel.font = FONT(12);
-               self.colorLabel.textAlignment = 0;
-               [self.contentView addSubview:self.colorLabel];
           }else if ([reuseIdentifier isEqualToString:@"havePic"]){
                
                self.dateLabel1 = [[UILabel alloc]init];
                self.dateLabel1.font = FONT(12);
                self.dateLabel1.textAlignment = 0;
                [self.contentView addSubview:self.dateLabel1];
-               
-               self.sizeLabel1 = [[UILabel alloc]init];
-               self.sizeLabel1.font = FONT(12);
-               self.sizeLabel1.textAlignment = 0;
-               [self.contentView addSubview:self.sizeLabel1];
-               
-               self.colorLabel1 = [[UILabel alloc]init];
-               self.colorLabel1.font = FONT(12);
-               self.colorLabel1.textAlignment = 0;
-               [self.contentView addSubview:self.colorLabel1];
                
                self.imageOne = [[UIImageView alloc]init];
                [self.contentView addSubview:self.imageOne];
@@ -93,17 +74,13 @@
      self.commentLabel.frame = CGRectMake(15, HEIGHT5S(50), WIDTH5S(290), _h);
      
      //无图时
-     self.dateLabel.frame = CGRectMake(15, HEIGHT5S(60+_h), WIDTH5S(100), HEIGHT5S(15));
-     self.sizeLabel.frame = CGRectMake(WIDTH5S(115), HEIGHT5S(60+_h), WIDTH5S(30), HEIGHT5S(15));
-     self.colorLabel.frame = CGRectMake(WIDTH5S(155), HEIGHT5S(60+_h), WIDTH5S(30), HEIGHT5S(15));
+     self.dateLabel.frame = CGRectMake(WIDTH5S(205), HEIGHT5S(15), WIDTH5S(100), HEIGHT5S(20));
      
      //有图时
      self.imageOne.frame = CGRectMake(15, HEIGHT5S(60+_h), WIDTH5S(40), HEIGHT5S(40));
      self.imageTwo.frame = CGRectMake(WIDTH5S(65), HEIGHT5S(60+_h), WIDTH5S(40), HEIGHT5S(40));
      self.imageThree.frame = CGRectMake(WIDTH5S(115), HEIGHT5S(60+_h), WIDTH5S(40), HEIGHT5S(40));
-     self.dateLabel.frame = CGRectMake(15, HEIGHT5S(110+_h), WIDTH5S(100), HEIGHT5S(15));
-     self.sizeLabel.frame = CGRectMake(WIDTH5S(115), HEIGHT5S(110+_h), WIDTH5S(30), HEIGHT5S(15));
-     self.colorLabel.frame = CGRectMake(WIDTH5S(155), HEIGHT5S(110+_h), WIDTH5S(30), HEIGHT5S(15));
+     self.dateLabel.frame = CGRectMake(WIDTH5S(205), HEIGHT5S(15), WIDTH5S(100), HEIGHT5S(20));
      
 }
 

@@ -12,6 +12,7 @@
 
 @interface GoodsDetailViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
+@property (strong,nonatomic)UIView *headView;  //放在tabelheaderView上
 @property (strong,nonatomic)UIScrollView *headScroll;
 @property (strong,nonatomic)UIImageView *headImage;
 @property (strong,nonatomic)UILabel *goodsNameLabel;  //商品名label
@@ -24,6 +25,7 @@
 @property (strong,nonatomic)UILabel *expressFeeLabel;  //快递费label
 @property (strong,nonatomic)UILabel *saleLabel; //月销量label
 @property (strong,nonatomic)UILabel *shopAddressLabel; //商家地址
+@property (strong,nonatomic)UILabel *sizeSelectLabel;  //尺寸选择
 @property (strong,nonatomic)UILabel *sellerPromiseLabel; //卖家承诺
 @property (strong,nonatomic)UILabel *separateLineLabel; //灰色分割线
 @property (strong,nonatomic)UILabel * evaluateLabel;  //评价
@@ -40,6 +42,8 @@
 @property (strong,nonatomic)UIView *backGroundView; //背景灰色（透明度）
 @property (strong,nonatomic)UIView *cartView;  //购物车
 @property (strong,nonatomic)UIView *buyView;  //购买
+@property (assign,nonatomic)int numberHave;  //商品库存数量
+@property (assign,nonatomic)int number;  //添加商品数量
 @end
 
 @implementation GoodsDetailViewController
@@ -53,8 +57,12 @@
      self.goodsDetail.delegate = self;
      [self.view addSubview:self.goodsDetail];
      
-     self.goodsDetail.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, HEIGHT5S(521))];
+     self.goodsDetail.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, HEIGHT5S(561))];
      [self.goodsDetail addSubview:self.goodsDetail.tableHeaderView];
+     
+     self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, HEIGHT5S(561))];
+     self.headView.backgroundColor = COLOR(255, 255, 255, 1);
+     [self.goodsDetail.tableHeaderView addSubview:self.headView];
      
      self.picArr = [NSMutableArray arrayWithCapacity:0];
      
@@ -79,7 +87,7 @@
      self.headScroll.showsVerticalScrollIndicator = NO;//是否显示竖向滚动条
      self.headScroll.showsHorizontalScrollIndicator = NO;//是否显示横向滚动条
      self.headScroll.pagingEnabled = YES;//是否设置分页
-     [self.goodsDetail.tableHeaderView addSubview:self.headScroll];
+     [self.headView addSubview:self.headScroll];
      
      for (int i = 0; i<4; i++) {
           self.headImage = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, HEIGHT5S(200))];
@@ -143,20 +151,20 @@
      self.goodsNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(210), WIDTH5S(140), HEIGHT5S(30))];
      self.goodsNameLabel.textAlignment = NSTextAlignmentLeft;
      self.goodsNameLabel.text = @"商品名称";
-     [self.goodsDetail.tableHeaderView addSubview:self.goodsNameLabel];
+     [self.headView addSubview:self.goodsNameLabel];
      
      self.collectLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-40, HEIGHT5S(236), WIDTH5S(30), HEIGHT5S(18))];
      self.collectLabel.textAlignment = NSTextAlignmentCenter;
      self.collectLabel.text =@"收藏";
      self.collectLabel.font = FONT(10);
-     [self.goodsDetail.tableHeaderView addSubview:self.collectLabel];
+     [self.headView addSubview:self.collectLabel];
      
      self.collectbtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-38, HEIGHT5S(211), WIDTH5S(24), HEIGHT5S(24))];
      self.collectbtn.layer.cornerRadius = 12;
      self.collectbtn.layer.masksToBounds = YES;
      [self.collectbtn setImage:[UIImage imageNamed:@"collect"] forState:UIControlStateNormal];
      [self.collectbtn addTarget:self action:@selector(collectbtnClick) forControlEvents:UIControlEventTouchUpInside];
-     [self.goodsDetail.tableHeaderView addSubview:self.collectbtn];
+     [self.headView addSubview:self.collectbtn];
      
      self.verticalLineLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-60, HEIGHT5S(210), WIDTH5S(1), HEIGHT5S(40))];
      self.verticalLineLabel.backgroundColor = COLOR(228, 228, 228, 1);
@@ -164,63 +172,74 @@
      
      self.transervseLineLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, HEIGHT5S(257), SCREEN_WIDTH, HEIGHT5S(1))];
      self.transervseLineLabel.backgroundColor = COLOR(228, 228, 228, 1);
-     [self.goodsDetail.tableHeaderView addSubview:self.transervseLineLabel];
+     [self.headView addSubview:self.transervseLineLabel];
      
      self.goodsPriceLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(267), WIDTH5S(100), HEIGHT5S(23))];
      self.goodsPriceLabel.textAlignment = NSTextAlignmentLeft;
      self.goodsPriceLabel.textColor = COLOR(150, 150, 150, 1);
      self.goodsPriceLabel.font = FONT(15);
      self.goodsPriceLabel.text = @"￥998";
-     [self.goodsDetail.tableHeaderView addSubview:self.goodsPriceLabel];
+     [self.headView addSubview:self.goodsPriceLabel];
      
      self.goodsOldPriceLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(291), WIDTH5S(81), HEIGHT5S(18))];
      self.goodsOldPriceLabel.textAlignment = NSTextAlignmentLeft;
      self.goodsOldPriceLabel.textColor = COLOR(148, 148, 148, 1);
      self.goodsOldPriceLabel.text = @"价格：￥1099";
      self.goodsOldPriceLabel.font = FONT(12);
-     [self.goodsDetail.tableHeaderView addSubview:self.goodsOldPriceLabel];
+     [self.headView addSubview:self.goodsOldPriceLabel];
      
      self.expressFeeLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(312), WIDTH5S(60), HEIGHT5S(18))];
      self.expressFeeLabel.textAlignment = NSTextAlignmentLeft;
      self.expressFeeLabel.textColor = COLOR(148, 148, 148, 1);
      self.expressFeeLabel.text = @"快递：0";
      self.expressFeeLabel.font = FONT(12);
-     [self.goodsDetail.tableHeaderView addSubview:self.expressFeeLabel];
+     [self.headView addSubview:self.expressFeeLabel];
      
      self.saleLabel = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH5S(120), HEIGHT5S(312), WIDTH5S(110), HEIGHT5S(18))];
      self.saleLabel.textAlignment = NSTextAlignmentCenter;
      self.saleLabel.textColor = COLOR(148, 148, 148, 1);
      self.saleLabel.text = @"月销售量265件";
      self.saleLabel.font = FONT(12);
-     [self.goodsDetail.tableHeaderView addSubview:self.saleLabel];
+     [self.headView addSubview:self.saleLabel];
      
      self.shopAddressLabel = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH5S(247), HEIGHT5S(312), WIDTH5S(63), HEIGHT5S(18))];
      self.shopAddressLabel.textAlignment = NSTextAlignmentCenter;
      self.shopAddressLabel.textColor = COLOR(148, 148, 148, 1);
      self.shopAddressLabel.text = @"河北 保定";
      self.shopAddressLabel.font = FONT(12);
-     [self.goodsDetail.tableHeaderView addSubview:self.shopAddressLabel];
+     [self.headView addSubview:self.shopAddressLabel];
      
-     self.sellerPromiseLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, HEIGHT5S(340), SCREEN_WIDTH, HEIGHT5S(40))];
-     self.sellerPromiseLabel.textAlignment = NSTextAlignmentCenter;
+     self.sizeSelectLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, HEIGHT5S(340), SCREEN_WIDTH, HEIGHT5S(40))];
+     self.sizeSelectLabel.textColor = COLOR(188, 188, 188, 1);
+     self.sizeSelectLabel.font = FONT(12);
+     self.sizeSelectLabel.text = @"    点击选择商品尺寸、颜色";
+     self.sizeSelectLabel.textAlignment = NSTextAlignmentLeft;
+     [self.headView addSubview:self.sizeSelectLabel];
+     
+     UILabel *line = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
+     line.backgroundColor = COLOR(228, 228, 228, 1);
+     [self.sizeSelectLabel addSubview:line];
+     
+     self.sellerPromiseLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, HEIGHT5S(380), SCREEN_WIDTH, HEIGHT5S(40))];
+     self.sellerPromiseLabel.textAlignment = NSTextAlignmentLeft;
      self.sellerPromiseLabel.backgroundColor = COLOR(228, 228, 228, 1);
      self.sellerPromiseLabel.textColor = COLOR(188, 188, 188, 1);
      self.sellerPromiseLabel.font = FONT(12);
-     self.sellerPromiseLabel.text = @"卖家承诺20小时内发货";
-     [self.goodsDetail.tableHeaderView addSubview:self.sellerPromiseLabel];
+     self.sellerPromiseLabel.text = @"    卖家承诺20小时内发货";
+     [self.headView addSubview:self.sellerPromiseLabel];
      
-     self.separateLineLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, HEIGHT5S(380), SCREEN_WIDTH, HEIGHT5S(20))];
+     self.separateLineLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, HEIGHT5S(420), SCREEN_WIDTH, HEIGHT5S(20))];
      self.separateLineLabel.backgroundColor = COLOR(201, 201, 201, 1);
-     [self.goodsDetail.tableHeaderView addSubview:self.separateLineLabel];
+     [self.headView addSubview:self.separateLineLabel];
      
-     self.evaluateLabel =[[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(401), WIDTH5S(110), HEIGHT5S(30))];
+     self.evaluateLabel =[[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(441), WIDTH5S(110), HEIGHT5S(30))];
      self.evaluateLabel.textColor = COLOR(150, 150, 150, 1);
      self.evaluateLabel.font = FONT(12);
      self.evaluateLabel.textAlignment = NSTextAlignmentLeft;
      self.evaluateLabel.text = @"宝贝评价(999)";
-     [self.goodsDetail.tableHeaderView addSubview:self.evaluateLabel];
+     [self.headView addSubview:self.evaluateLabel];
      
-     self.assess1 = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(441), WIDTH5S(90), HEIGHT5S(30))];
+     self.assess1 = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(481), WIDTH5S(90), HEIGHT5S(30))];
      self.assess1.font = FONT(12);
      self.assess1.layer.cornerRadius = 5;
      self.assess1.layer.masksToBounds = YES;
@@ -228,9 +247,9 @@
      self.assess1.textColor = COLOR(150, 150, 150, 1);
      self.assess1.text = @"质量好(233)";
      self.assess1.textAlignment = NSTextAlignmentCenter;
-     [self.goodsDetail.tableHeaderView addSubview:self.assess1];
+     [self.headView addSubview:self.assess1];
      
-     self.assess2 = [[UILabel alloc]initWithFrame:CGRectMake(115, HEIGHT5S(441), WIDTH5S(80), HEIGHT5S(30))];
+     self.assess2 = [[UILabel alloc]initWithFrame:CGRectMake(115, HEIGHT5S(481), WIDTH5S(80), HEIGHT5S(30))];
      self.assess2.font = FONT(12);
      self.assess2.layer.cornerRadius = 5;
      self.assess2.layer.masksToBounds = YES;
@@ -238,9 +257,9 @@
      self.assess2.textColor = COLOR(150, 150, 150, 1);
      self.assess2.text = @"便宜(518)";
      self.assess2.textAlignment = NSTextAlignmentCenter;
-     [self.goodsDetail.tableHeaderView addSubview:self.assess2];
+     [self.headView addSubview:self.assess2];
      
-     self.assess3 = [[UILabel alloc]initWithFrame:CGRectMake(205, HEIGHT5S(441), WIDTH5S(100), HEIGHT5S(30))];
+     self.assess3 = [[UILabel alloc]initWithFrame:CGRectMake(205, HEIGHT5S(481), WIDTH5S(100), HEIGHT5S(30))];
      self.assess3.font = FONT(12);
      self.assess3.layer.cornerRadius = 5;
      self.assess3.layer.masksToBounds = YES;
@@ -248,9 +267,9 @@
      self.assess3.textColor = COLOR(150, 150, 150, 1);
      self.assess3.text = @"快递不错(20)";
      self.assess3.textAlignment = NSTextAlignmentCenter;
-     [self.goodsDetail.tableHeaderView addSubview:self.assess3];
+     [self.headView addSubview:self.assess3];
      
-     self.assess4 = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(481), WIDTH5S(90), HEIGHT5S(30))];
+     self.assess4 = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(521), WIDTH5S(90), HEIGHT5S(30))];
      self.assess4.font = FONT(12);
      self.assess4.layer.cornerRadius = 5;
      self.assess4.layer.masksToBounds = YES;
@@ -258,9 +277,9 @@
      self.assess4.textColor = COLOR(150, 150, 150, 1);
      self.assess4.text = @"款式新(311)";
      self.assess4.textAlignment = NSTextAlignmentCenter;
-     [self.goodsDetail.tableHeaderView addSubview:self.assess4];
+     [self.headView addSubview:self.assess4];
      
-     self.assess5 = [[UILabel alloc]initWithFrame:CGRectMake(115, HEIGHT5S(481), WIDTH5S(90), HEIGHT5S(30))];
+     self.assess5 = [[UILabel alloc]initWithFrame:CGRectMake(115, HEIGHT5S(521), WIDTH5S(90), HEIGHT5S(30))];
      self.assess5.font = FONT(12);
      self.assess5.layer.cornerRadius = 5;
      self.assess5.layer.masksToBounds = YES;
@@ -268,9 +287,9 @@
      self.assess5.textColor = COLOR(150, 150, 150, 1);
      self.assess5.text = @"态度好(8)";
      self.assess5.textAlignment = NSTextAlignmentCenter;
-     [self.goodsDetail.tableHeaderView addSubview:self.assess5];
+     [self.headView addSubview:self.assess5];
      
-     self.assess6 = [[UILabel alloc]initWithFrame:CGRectMake(215, HEIGHT5S(481), WIDTH5S(90), HEIGHT5S(30))];
+     self.assess6 = [[UILabel alloc]initWithFrame:CGRectMake(215, HEIGHT5S(521), WIDTH5S(90), HEIGHT5S(30))];
      self.assess6.font = FONT(12);
      self.assess6.layer.cornerRadius = 5;
      self.assess6.layer.masksToBounds = YES;
@@ -278,7 +297,7 @@
      self.assess6.textColor = COLOR(150, 150, 150, 1);
      self.assess6.text = @"大小合适(2330)";
      self.assess6.textAlignment = NSTextAlignmentCenter;
-     [self.goodsDetail.tableHeaderView addSubview:self.assess6];
+     [self.headView addSubview:self.assess6];
      
 }
 
@@ -305,8 +324,6 @@
           cell.userImage.image = [UIImage imageNamed:@""];
           cell.userName.text = @"xxx";
           cell.dateLabel.text = @"2016-04-05";
-          cell.sizeLabel.text = @"xxl";
-          cell.colorLabel.text = @"黑色";
           cell.commentLabel.text = @"不错";
           [cell setIntroductionText:cell.commentLabel.text];
           self.height=cell.frame.size.height;
@@ -321,11 +338,9 @@
           if (cell == nil) {
                cell = [[GoodsDetailTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:pic];
           }
-          cell.userImage.image = [UIImage imageNamed:@""];
+          cell.userImage.image = [UIImage imageNamed:@"1.0.jpg"];
           cell.userName.text = @"xxx";
           cell.dateLabel1.text = @"2016-04-05";
-          cell.sizeLabel1.text = @"xxl";
-          cell.colorLabel1.text = @"黑色";
           cell.commentLabel.text = @"不错";
           cell.imageOne.image = [UIImage imageNamed:self.picArr[0]];
           cell.imageTwo.image = [UIImage imageNamed:self.picArr[1]];
@@ -342,6 +357,7 @@
      
 }
 
+//购物车弹出页面控件创建
 - (void)createShopCart{
      
      self.backGroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
@@ -349,37 +365,172 @@
      self.backGroundView.alpha = 0;
      [self.view addSubview:self.backGroundView];
      
-     self.cartView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, HEIGHT5S(368))];
+     self.cartView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, HEIGHT5S(300))];
+     self.cartView.backgroundColor = [UIColor whiteColor];
      [self.view addSubview:self.cartView];
      
+     UIImageView *goodsImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, HEIGHT5S(170))];
+     goodsImg.backgroundColor = COLOR(228, 228, 228, 1);
+     [self.cartView addSubview:goodsImg];
+     
+     UILabel *numLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(180), WIDTH5S(40), HEIGHT5S(20))];
+     numLabel.text = @"库存:";
+     numLabel.font = FONT(12);
+     [self.cartView addSubview:numLabel];
+     
+     UILabel *numData = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH5S(60), HEIGHT5S(180), WIDTH5S(40), HEIGHT5S(20))];
+     self.numberHave = 1500;
+     numData.text = [NSString stringWithFormat:@"%d",self.numberHave];
+     numData.font = FONT(12);
+     [self.cartView addSubview:numData];
+     
+     UILabel *lines = [[UILabel alloc]initWithFrame:CGRectMake(0, HEIGHT5S(209), SCREEN_WIDTH, HEIGHT5S(1))];
+     lines.backgroundColor = COLOR(228, 228, 228, 1);
+     [self.cartView addSubview:lines];
+     
+     UILabel *buyNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(220), WIDTH5S(60), HEIGHT5S(20))];
+     buyNumLabel.text = @"购买数量";
+     buyNumLabel.font = FONT(12);
+     [self.cartView addSubview:buyNumLabel];
+     
+     UIButton *reduceBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH5S(225), HEIGHT5S(220), WIDTH5S(20), HEIGHT5S(20))];
+     [reduceBtn setTitle:@"-" forState:UIControlStateNormal];
+     [reduceBtn setBackgroundColor:COLOR(228, 228, 228, 1)];
+     [self.cartView addSubview:reduceBtn];
+     
+     UIButton *addBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH5S(285), HEIGHT5S(220), WIDTH5S(20), HEIGHT5S(20))];
+     [addBtn setBackgroundColor:COLOR(228, 228, 228, 1)];
+     [addBtn setTitle:@"+" forState:UIControlStateNormal];
+     [self.cartView addSubview:addBtn];
+     
+     UILabel *buyNum = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH5S(245), HEIGHT5S(220), WIDTH5S(60), HEIGHT5S(20))];
+     self.number = 0;
+     buyNum.text = [NSString stringWithFormat:@"%d",self.number];
+     buyNum.font = FONT(12);
+     [self.cartView addSubview:buyNum];
+     
+     UIButton *goCart = [[UIButton alloc]initWithFrame:CGRectMake(0, HEIGHT5S(250), SCREEN_WIDTH, HEIGHT5S(50))];
+     [goCart setBackgroundColor:COLOR(0, 210, 210, 1)];
+     [goCart setTitle:@"去购物车结算" forState:UIControlStateNormal];
+     [goCart setTitleColor:COLOR(255, 255, 255, 1) forState:UIControlStateNormal];
+     [self.cartView addSubview:goCart];
+     
+     UIButton *back = [[UIButton alloc]initWithFrame:CGRectMake(15, 15, WIDTH5S(20), HEIGHT5S(20))];
+     [back setBackgroundImage:[UIImage imageNamed:@"back_48px_1125197_easyicon.net"] forState:UIControlStateNormal];
+     [self.cartView addSubview:back];
+     
+     //点击事件
+     [reduceBtn addTarget:self action:@selector(reduce) forControlEvents:UIControlEventTouchUpInside];
+     [addBtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
+     [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+     [goCart addTarget:self action:@selector(goCart) forControlEvents:UIControlEventTouchUpInside];
      
 }
+
+//购买弹出页面控件创建
 - (void)createShopBuy{
      
-     self.buyView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, HEIGHT5S(368))];
-     [self.view addSubview:self.cartView];
+     self.buyView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, HEIGHT5S(300))];
+     self.buyView.backgroundColor = [UIColor whiteColor];
+     [self.view addSubview:self.buyView];
+     
+     UIImageView *goodsImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, HEIGHT5S(170))];
+     goodsImg.backgroundColor = COLOR(228, 228, 228, 1);
+     [self.buyView addSubview:goodsImg];
+     
+     UILabel *numLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(180), WIDTH5S(40), HEIGHT5S(20))];
+     numLabel.text = @"库存:";
+     numLabel.font = FONT(12);
+     [self.buyView addSubview:numLabel];
+     
+     UILabel *numData = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH5S(60), HEIGHT5S(180), WIDTH5S(40), HEIGHT5S(20))];
+     self.numberHave = 1500;
+     numData.text = [NSString stringWithFormat:@"%d",self.numberHave];
+     numData.font = FONT(12);
+     [self.buyView addSubview:numData];
+     
+     UILabel *lines = [[UILabel alloc]initWithFrame:CGRectMake(0, HEIGHT5S(209), SCREEN_WIDTH, HEIGHT5S(1))];
+     lines.backgroundColor = COLOR(228, 228, 228, 1);
+     [self.buyView addSubview:lines];
+     
+     UILabel *buyNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, HEIGHT5S(220), WIDTH5S(60), HEIGHT5S(20))];
+     buyNumLabel.text = @"购买数量";
+     buyNumLabel.font = FONT(12);
+     [self.buyView addSubview:buyNumLabel];
+     
+     UIButton *reduceBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH5S(225), HEIGHT5S(220), WIDTH5S(20), HEIGHT5S(20))];
+     [reduceBtn setTitle:@"-" forState:UIControlStateNormal];
+     [reduceBtn setBackgroundColor:COLOR(228, 228, 228, 1)];
+     [self.buyView addSubview:reduceBtn];
+     
+     UIButton *addBtn = [[UIButton alloc]initWithFrame:CGRectMake(WIDTH5S(285), HEIGHT5S(220), WIDTH5S(20), HEIGHT5S(20))];
+     [addBtn setBackgroundColor:COLOR(228, 228, 228, 1)];
+     [addBtn setTitle:@"+" forState:UIControlStateNormal];
+     [self.buyView addSubview:addBtn];
+     
+     UILabel *buyNum = [[UILabel alloc]initWithFrame:CGRectMake(WIDTH5S(245), HEIGHT5S(220), WIDTH5S(60), HEIGHT5S(20))];
+     self.number = 0;
+     buyNum.text = [NSString stringWithFormat:@"%d",self.number];
+     buyNum.font = FONT(12);
+     [self.buyView addSubview:buyNum];
+     
+     UIButton *goCart = [[UIButton alloc]initWithFrame:CGRectMake(0, HEIGHT5S(250), SCREEN_WIDTH, HEIGHT5S(50))];
+     [goCart setBackgroundColor:COLOR(0, 210, 210, 1)];
+     [goCart setTitle:@"去支付" forState:UIControlStateNormal];
+     [goCart setTitleColor:COLOR(255, 255, 255, 1) forState:UIControlStateNormal];
+     [self.buyView addSubview:goCart];
+     
+     UIButton *back = [[UIButton alloc]initWithFrame:CGRectMake(15, 15, WIDTH5S(20), HEIGHT5S(20))];
+     [back setBackgroundImage:[UIImage imageNamed:@"back_48px_1125197_easyicon.net"] forState:UIControlStateNormal];
+     [self.buyView addSubview:back];
+     
+     //点击事件
+     [reduceBtn addTarget:self action:@selector(reduce) forControlEvents:UIControlEventTouchUpInside];
+     [addBtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
+     [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+     [goCart addTarget:self action:@selector(goCart) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)reduce{
+     self.number--;
+     NSLog(@"--");
+}
+- (void)add{
+     
+     self.number++;
+     NSLog(@"++");
+}
+- (void)back{
+     
+     [UIView animateWithDuration:0.5 animations:^{
+          self.cartView.frame = CGRectMake(0, HEIGHT5S(568), SCREEN_WIDTH, HEIGHT5S(300));
+          self.buyView.frame = CGRectMake(0, HEIGHT5S(568), SCREEN_WIDTH, HEIGHT5S(300));
+          self.backGroundView.alpha = 0;
+     }];
+}
+- (void)goCart{
      
 }
 #pragma mark - 底部四个按钮执行方法
 -(void)test:(UIButton *)sender{
      NSLog(@"%ld",sender.tag);
      
-     if (sender.tag == 3) {
+     if (sender.tag == 1) {
           
      }else if (sender.tag == 2){
           
      }else if (sender.tag == 3){
           
           [UIView animateWithDuration:0.5 animations:^{
-               self.cartView.frame = CGRectMake(0, HEIGHT5S(200), SCREEN_WIDTH, HEIGHT5S(368));
-               self.backGroundView.alpha = 0.3;
+               self.cartView.frame = CGRectMake(0, HEIGHT5S(268), SCREEN_WIDTH, HEIGHT5S(300));
+               self.backGroundView.alpha = 0.4;
           }];
           
      }else{
           
           [UIView animateWithDuration:0.5 animations:^{
-               self.buyView.frame = CGRectMake(0, HEIGHT5S(200), SCREEN_WIDTH, HEIGHT5S(368));
-               self.backGroundView.alpha = 0.3;
+               self.buyView.frame = CGRectMake(0, HEIGHT5S(268), SCREEN_WIDTH, HEIGHT5S(300));
+               self.backGroundView.alpha = 0.4;
           }];
           
      }
