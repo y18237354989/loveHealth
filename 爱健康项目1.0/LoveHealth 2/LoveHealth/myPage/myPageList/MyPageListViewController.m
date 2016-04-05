@@ -10,6 +10,7 @@
 #import "Header.h"
 #import "nearlistViewController.h"
 #import "newsServerceViewController.h"
+#import "MyOrderViewController.h"
 
 @interface MyPageListViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -101,6 +102,10 @@
             nearlistViewController *ner=[[nearlistViewController alloc]init];
             [self.navigationController pushViewController:ner animated:YES];
         
+        }else if (indexPath.row == 3){
+             
+//             MyOrderViewController *mvc = [[MyOrderViewController alloc]init];
+//             [self.navigationController pushViewController:mvc animated:YES];
         }
          
     }

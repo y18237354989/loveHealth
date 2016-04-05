@@ -33,6 +33,8 @@
 
 @property (strong, nonatomic)myNavigation *navigation;
 
+@property (copy, nonatomic)NSString *nameStr;  //临时存放商品名
+
 
 
 @end
@@ -152,7 +154,8 @@
 
         cell.backgroundColor = [UIColor whiteColor];
         cell.goodsImage.image = [UIImage imageNamed:self.cell2arr1[indexPath.row]];
-        cell.goodsName.text = @"瘦身机瘦身机瘦身机瘦身机瘦身机瘦身机瘦身机瘦身机";
+        cell.goodsName.text = @"瘦身机";
+        self.nameStr = cell.goodsName.text;
         cell.goodsPriceLabel.text = [NSString stringWithFormat:@"￥:998"];
         return cell;
     }else if (indexPath.section == 2){
@@ -220,6 +223,7 @@
      
     if (indexPath.section == 1) {
         GoodsDetailViewController *gdvc2 = [[GoodsDetailViewController alloc]init];
+         gdvc2.goodsDic = [NSMutableDictionary dictionaryWithObject:self.nameStr forKey:@"name"];
          gdvc2.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:gdvc2 animated:YES];
     }
