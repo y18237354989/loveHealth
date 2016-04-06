@@ -74,7 +74,7 @@
      gv.tabBarItem.selectedImage = [UIImage imageNamed:@"findHL@2x"];
      
      PostListViewController *pv = [[PostListViewController alloc]init];
-     pv.title = @"热帖";
+     pv.title = @"热贴";
      pv.tabBarItem.title = @"热贴";
      pv.tabBarItem.image = [UIImage imageNamed:@"post@2x"];
      pv.tabBarItem.selectedImage = [UIImage imageNamed:@"postSelect@2x"];

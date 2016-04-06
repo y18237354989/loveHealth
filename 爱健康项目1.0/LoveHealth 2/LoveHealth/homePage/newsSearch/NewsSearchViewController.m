@@ -41,9 +41,6 @@
     
     self.searchC.searchBar.delegate = self;
     
-    //    self.searchC.searchBar.searchResultsButtonSelected = YES;
-    //    self.searchC.searchBar.showsSearchResultsButton=YES;
-    
     self.mytable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     self.mytable.dataSource = self;
     self.mytable.delegate = self;
@@ -96,7 +93,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSLog(@"-1-->%@",self.newsTypeArr[indexPath.row]);
+   
     
 }
 
@@ -110,25 +107,26 @@
 //        NSLog(@"-3-->%@",self.newsTypeArr[sender.tag]);
 //    }
     
-//        [self.navigationController popViewControllerAnimated:YES];
+
     if (_delegate !=nil&&[_delegate respondsToSelector:@selector(receiveValue:)]) {
         
         if (self.searchC.active) {
-//            NSLog(@"%ld",sender.tag);
-//            NSLog(@"-2-->%@",self.searchList[sender.tag]);
             [_delegate receiveValue:self.searchList[sender.tag]];
         }else{
-//            NSLog(@"%ld",sender.tag);
-//            NSLog(@"-3-->%@",self.newsTypeArr[sender.tag]);
             [_delegate receiveValue:self.newsTypeArr[sender.tag]];
         }
         
-//        [_delegate receiveValue:self.newsTypeArr[sender.tag]];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
-
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (self.searchC.active) {
+        self.searchC.active = NO;
+        [self.searchC.searchBar removeFromSuperview];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

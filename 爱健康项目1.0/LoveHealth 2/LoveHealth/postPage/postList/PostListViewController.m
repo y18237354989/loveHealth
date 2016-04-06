@@ -8,6 +8,7 @@
 
 #import "PostListViewController.h"
 #import "Header.h"
+#import "SendPostViewController.h"
 @interface PostListViewController ()
 
 @end
@@ -21,21 +22,21 @@
       @{NSFontAttributeName:FONT(18),
         NSForegroundColorAttributeName:COLOR(255, 255, 255, 1)}];
     self.view.backgroundColor = [UIColor blueColor];
+    
+    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithTitle:@"发贴" style:UIBarButtonItemStylePlain target:self action:@selector(sendPostPage)];
+    [right setTintColor:COLOR(255, 255, 255, 1)];
+    self.navigationItem.rightBarButtonItem = right;
 }
 
+-(void)sendPostPage{
+    SendPostViewController *svc = [[SendPostViewController alloc]init];
+    svc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:svc animated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

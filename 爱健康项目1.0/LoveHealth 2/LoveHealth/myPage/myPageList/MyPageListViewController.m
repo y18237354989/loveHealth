@@ -11,6 +11,7 @@
 #import "nearlistViewController.h"
 #import "newsServerceViewController.h"
 #import "MyOrderViewController.h"
+#import "ShoppingCartViewController.h"
 
 @interface MyPageListViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -106,6 +107,12 @@
              
 //             MyOrderViewController *mvc = [[MyOrderViewController alloc]init];
 //             [self.navigationController pushViewController:mvc animated:YES];
+        }else if (indexPath.row == 4){
+            ShoppingCartViewController *snv = [[ShoppingCartViewController alloc]init];
+            snv.hidesBottomBarWhenPushed = YES;
+            self.navigationController.navigationBar.hidden=NO;
+            
+            [self.navigationController pushViewController:snv animated:YES];
         }
          
     }

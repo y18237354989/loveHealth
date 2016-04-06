@@ -11,6 +11,7 @@
 #import "GoodsDetailTableViewCell.h"
 #import <RongIMKit/RongIMKit.h>
 #import "MyOrderViewController.h"
+#import "MJRefresh.h"
 
 @interface GoodsDetailViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -60,6 +61,10 @@
      
      self.picArr = [NSMutableArray arrayWithCapacity:0];
      self.goodsDic = [NSMutableDictionary dictionaryWithCapacity:0];
+    
+    self.goodsDetail.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+    }];
      
      [self createHeadScroll];
      [self createOtherPart];

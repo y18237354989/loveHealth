@@ -81,6 +81,10 @@
 		C36FF89B1CB49F1400D44F4D /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = C36FF8861CB49F1400D44F4D /* UIScrollView+MJExtension.m */; };
 		C36FF89C1CB49F1400D44F4D /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = C36FF8881CB49F1400D44F4D /* UIScrollView+MJRefresh.m */; };
 		C36FF89D1CB49F1400D44F4D /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = C36FF88A1CB49F1400D44F4D /* UIView+MJExtension.m */; };
+		C36FF89F1CB4DE7D00D44F4D /* AddPic.png in Resources */ = {isa = PBXBuildFile; fileRef = C36FF89E1CB4DE7D00D44F4D /* AddPic.png */; };
+		C36FF8A21CB4E09000D44F4D /* ShoppingCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C36FF8A11CB4E09000D44F4D /* ShoppingCarTableViewCell.m */; };
+		C36FF8AB1CB4EA4D00D44F4D /* YCXMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C36FF8A81CB4EA4D00D44F4D /* YCXMenu.m */; };
+		C36FF8AC1CB4EA4D00D44F4D /* YCXMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C36FF8AA1CB4EA4D00D44F4D /* YCXMenuItem.m */; };
 		C3A9AF3C1CAA22580011CACA /* newsServerceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A9AF3B1CAA22580011CACA /* newsServerceViewController.m */; };
 		C3A9AF4B1CAA234C0011CACA /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A9AF3F1CAA234C0011CACA /* AFHTTPSessionManager.m */; };
 		C3A9AF4C1CAA234C0011CACA /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A9AF421CAA234C0011CACA /* AFNetworkReachabilityManager.m */; };
@@ -266,6 +270,13 @@
 		C36FF8881CB49F1400D44F4D /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		C36FF8891CB49F1400D44F4D /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		C36FF88A1CB49F1400D44F4D /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		C36FF89E1CB4DE7D00D44F4D /* AddPic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddPic.png; sourceTree = "<group>"; };
+		C36FF8A01CB4E09000D44F4D /* ShoppingCarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCarTableViewCell.h; sourceTree = "<group>"; };
+		C36FF8A11CB4E09000D44F4D /* ShoppingCarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCarTableViewCell.m; sourceTree = "<group>"; };
+		C36FF8A71CB4EA4D00D44F4D /* YCXMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCXMenu.h; sourceTree = "<group>"; };
+		C36FF8A81CB4EA4D00D44F4D /* YCXMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YCXMenu.m; sourceTree = "<group>"; };
+		C36FF8A91CB4EA4D00D44F4D /* YCXMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCXMenuItem.h; sourceTree = "<group>"; };
+		C36FF8AA1CB4EA4D00D44F4D /* YCXMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YCXMenuItem.m; sourceTree = "<group>"; };
 		C3A9AF3A1CAA22580011CACA /* newsServerceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newsServerceViewController.h; sourceTree = "<group>"; };
 		C3A9AF3B1CAA22580011CACA /* newsServerceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newsServerceViewController.m; sourceTree = "<group>"; };
 		C3A9AF3E1CAA234C0011CACA /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
@@ -393,6 +404,7 @@
 		C329B2131CA6940B00F8C87B = {
 			isa = PBXGroup;
 			children = (
+				C36FF89E1CB4DE7D00D44F4D /* AddPic.png */,
 				C329B2601CA6996600F8C87B /* Frame */,
 				C329B21E1CA6940B00F8C87B /* LoveHealth */,
 				C329B2381CA6940C00F8C87B /* LoveHealthTests */,
@@ -550,6 +562,7 @@
 		C329B2601CA6996600F8C87B /* Frame */ = {
 			isa = PBXGroup;
 			children = (
+				C36FF8A61CB4EA3400D44F4D /* memu菜单 */,
 				C36FF85E1CB49F1400D44F4D /* MJRefresh */,
 				C3A9AF3D1CAA234C0011CACA /* AFNetworking */,
 			);
@@ -815,6 +828,8 @@
 			children = (
 				C329B2CE1CA6B96700F8C87B /* ShoppingCartViewController.h */,
 				C329B2CF1CA6B96700F8C87B /* ShoppingCartViewController.m */,
+				C36FF8A01CB4E09000D44F4D /* ShoppingCarTableViewCell.h */,
+				C36FF8A11CB4E09000D44F4D /* ShoppingCarTableViewCell.m */,
 			);
 			path = shoppingCart;
 			sourceTree = "<group>";
@@ -928,6 +943,17 @@
 				C36FF8801CB49F1400D44F4D /* MJRefreshStateHeader.m */,
 			);
 			path = Header;
+			sourceTree = "<group>";
+		};
+		C36FF8A61CB4EA3400D44F4D /* memu菜单 */ = {
+			isa = PBXGroup;
+			children = (
+				C36FF8A71CB4EA4D00D44F4D /* YCXMenu.h */,
+				C36FF8A81CB4EA4D00D44F4D /* YCXMenu.m */,
+				C36FF8A91CB4EA4D00D44F4D /* YCXMenuItem.h */,
+				C36FF8AA1CB4EA4D00D44F4D /* YCXMenuItem.m */,
+			);
+			path = "memu菜单";
 			sourceTree = "<group>";
 		};
 		C3A9AF391CAA22160011CACA /* newsServerce */ = {
@@ -1114,6 +1140,7 @@
 				C3A9AF5C1CAA906C0011CACA /* collect.png in Resources */,
 				C329B2E51CA8EFE000F8C87B /* 1.2.jpg in Resources */,
 				C3A9AF6E1CAA91B90011CACA /* like_48px_1159878_easyicon.net.png in Resources */,
+				C36FF89F1CB4DE7D00D44F4D /* AddPic.png in Resources */,
 				C3A9AF601CAA90A90011CACA /* back_48px_1125197_easyicon.net.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1214,11 +1241,13 @@
 				C3ECF77F1CAD58270033C3F9 /* GoodsSearchViewController.m in Sources */,
 				C36FF8941CB49F1400D44F4D /* MJRefreshBackNormalFooter.m in Sources */,
 				C3A9AF4D1CAA234C0011CACA /* AFSecurityPolicy.m in Sources */,
+				C36FF8AC1CB4EA4D00D44F4D /* YCXMenuItem.m in Sources */,
 				C329B2241CA6940B00F8C87B /* AppDelegate.m in Sources */,
 				C3ECF78E1CAD586B0033C3F9 /* GoodsTypeCollectionViewCell.m in Sources */,
 				C36FF88C1CB49F1400D44F4D /* MJRefreshBackFooter.m in Sources */,
 				C329B2751CA69E9400F8C87B /* OnlineServerceViewController.m in Sources */,
 				C329B2811CA69FA100F8C87B /* PostDetailViewController.m in Sources */,
+				C36FF8A21CB4E09000D44F4D /* ShoppingCarTableViewCell.m in Sources */,
 				C3A9AF501CAA234C0011CACA /* AFURLSessionManager.m in Sources */,
 				C3C281681CB3D19F00210648 /* OrderTableViewCell.m in Sources */,
 				C329B2AE1CA6A5BF00F8C87B /* RegisterViewController.m in Sources */,
@@ -1230,6 +1259,7 @@
 				C3A9AF4E1CAA234C0011CACA /* AFURLRequestSerialization.m in Sources */,
 				C343AEBA1CABE8140007DAEE /* ReCommentTableViewCell.m in Sources */,
 				C3A9AF4C1CAA234C0011CACA /* AFNetworkReachabilityManager.m in Sources */,
+				C36FF8AB1CB4EA4D00D44F4D /* YCXMenu.m in Sources */,
 				C343AEBD1CABF2D70007DAEE /* NewsListViewController.m in Sources */,
 				C36FF89C1CB49F1400D44F4D /* UIScrollView+MJRefresh.m in Sources */,
 				C3ECF7901CAD586B0033C3F9 /* GoodShopCollectionViewCell.m in Sources */,
